@@ -2,6 +2,7 @@ import pytest
 from unittest import mock
 import datetime
 from app.main import outdated_products
+from typing import List, Dict
 
 
 @pytest.mark.parametrize(
@@ -45,7 +46,11 @@ from app.main import outdated_products
         )
     ]
 )
-def test_outdated_products(products, today_date, expected_outdated):
+def test_outdated_products(
+    products: List[Dict[str, object]],
+    today_date: datetime.date,
+    expected_outdated: List[str]
+) -> None:
     with mock.patch("app.main.datetime.date") as mock_date:
         mock_date.today.return_value = today_date
         result = outdated_products(products)
